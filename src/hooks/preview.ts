@@ -1,12 +1,12 @@
 import { Clipboard, showHUD, closeMainWindow } from "@raycast/api";
 import { useDeferredValue, useState } from "react";
 import { Symbols } from "..";
-import { useHistoric } from "./historic";
+import { useFavorites } from "./favorites";
 
 export type ContextProps = ReturnType<typeof usePreview>;
 
 export const usePreview = () => {
-  const { historic, save, unSave, deleteAllSaves } = useHistoric();
+  const { favorites, save, unSave, deleteAllSaves } = useFavorites();
   const [currentValue, setCurrentValue] = useState("");
   const preview = useDeferredValue(currentValue);
 
@@ -53,7 +53,7 @@ export const usePreview = () => {
     onSubmit,
     copyAndClose,
     onAction,
-    historic,
+    favorites,
     deleteAllSaves,
     setCurrentValue,
   };

@@ -20,8 +20,8 @@ export const Dropdown: FC<Props> = ({ context }) => {
       <Grid.Dropdown.Section title="Current">
         <Grid.Dropdown.Item title={context.preview} value={"current"} />
       </Grid.Dropdown.Section>
-      <Grid.Dropdown.Section title="Historic">
-        {context.historic.map((item) => (
+      <Grid.Dropdown.Section title="Favorites">
+        {context.favorites.map((item) => (
           <Grid.Dropdown.Item key={item} title={item} value={item} />
         ))}
       </Grid.Dropdown.Section>

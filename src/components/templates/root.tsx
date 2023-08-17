@@ -12,6 +12,8 @@ export type Props = {
 export const Root: FC<Props> = ({ children, context }) => {
   const [selection, setSelection] = useState<Symbols | null>();
 
+  const selectedItemId: Symbols = "clean";
+
   useEffect(() => {
     if (selection) context.onAction(selection);
   }, [selection]);
@@ -21,7 +23,7 @@ export const Root: FC<Props> = ({ children, context }) => {
       columns={7}
       fit={Grid.Fit.Fill}
       inset={Grid.Inset.Large}
-      selectedItemId="finish"
+      selectedItemId={selectedItemId}
       onSelectionChange={(i) => setSelection(i as Symbols)}
       searchBarAccessory={<Dropdown context={context} />}
     >
