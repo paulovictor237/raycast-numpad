@@ -1,12 +1,8 @@
 import { FC } from "react";
-import { ItemField } from "./item";
+import { ItemField, ItemProps } from "./item";
 import { Icon } from "@raycast/api";
-import { ContextProps } from "..";
 
-export type Props = {
-  id: string;
-  context: ContextProps;
-};
+export type Props = Pick<ItemProps, "id" | "context">;
 
 export const NumberItem: FC<Props> = ({ id, context }) => {
   return (

@@ -3,6 +3,7 @@ import { FC } from "react";
 
 export type Props = {
   preview: string;
+  historic: string[];
 };
 
 export const Dropdown: FC<Props> = ({ preview }) => {

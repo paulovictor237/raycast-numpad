@@ -1,8 +1,8 @@
 import { Grid, Icon } from "@raycast/api";
 import { ItemField, ItemProps } from "../components/item";
 import { NumberItem } from "../components/numberItem";
-import { ContextProps } from "..";
 import { FC } from "react";
+import { ContextProps } from "../hooks/preview";
 
 export type Props = {
   context: ContextProps;
@@ -13,6 +13,7 @@ export const Section1: FC<Props> = ({ context }) => {
     { id: "=", icon: Icon["ShortParagraph"], title: "Equal" },
     { id: "*", icon: Icon["Multiply"], title: "Multiply" },
     { id: "/", icon: Icon["Italics"], title: "Divide" },
+    { id: "save", icon: Icon["Heart"], title: "Save" },
   ];
 
   return (

@@ -1,9 +1,10 @@
 import { Grid, Color, ActionPanel, Action, Icon } from "@raycast/api";
 import { FC } from "react";
-import { ContextProps } from "..";
+import { Symbols } from "..";
+import { ContextProps } from "../hooks/preview";
 
 export type ItemProps = {
-  id: string;
+  id: Symbols;
   icon: Icon;
   title: string;
   color?: Color;
@@ -28,13 +29,9 @@ export const ItemField: FC<ItemProps> = (item) => {
             title="Push"
             onAction={() => item.context?.onAction(item.id)}
           />
+          <Action title="Paste" onAction={item.context?.onSubmit} />
           <Action
-            title="Paste"
-            shortcut={{ modifiers: ["cmd"], key: "enter" }}
-            onAction={item.context?.onSubmit}
-          />
-          <Action
-            title="Copy"
+            title="Copy Text"
             shortcut={{ modifiers: ["cmd", "shift"], key: "enter" }}
             onAction={item.context?.copyAndClose}
           />
