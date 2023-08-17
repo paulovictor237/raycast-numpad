@@ -1,56 +1,51 @@
 import { Clipboard, showHUD, closeMainWindow } from "@raycast/api";
-import { useState } from "react";
+import { useDeferredValue, useState } from "react";
 import { Symbols } from "..";
 import { useHistoric } from "./historic";
 
-export type ContextProps = {
-  preview: string;
-  onSubmit: () => void;
-  copyAndClose: () => void;
-  onAction: (input: Symbols) => void;
-};
+export type ContextProps = ReturnType<typeof usePreview>;
 
-export const usePreview = (): ContextProps => {
-  const [preview, setPreview] = useState("");
-  const { historic, save, unSave } = useHistoric();
+export const usePreview = () => {
+  const { historic, save, unSave, deleteAllSaves } = useHistoric();
+  const [currentValue, setCurrentValue] = useState("");
+  const preview = useDeferredValue(currentValue);
 
   const onSubmit = async () => {
-    if (!preview.length) return;
-    setPreview("");
-    await Clipboard.copy(preview);
-    await Clipboard.paste(preview);
+    if (!currentValue.length) return;
+    setCurrentValue("");
+    await Clipboard.copy(currentValue);
+    await Clipboard.paste(currentValue);
     await showHUD("Copied date to clipboard");
   };
 
-  const clear = () => {
-    setPreview("");
+  const copyAndClose = async () => {
+    if (!currentValue.length) return;
+    setCurrentValue("");
+    await Clipboard.copy(currentValue);
+    await closeMainWindow({ clearRootSearch: true });
+    await showHUD("Copied date to clipboard");
   };
 
-  const undo = () => {
-    setPreview((p) => p.slice(0, -1));
-  };
+  const clear = () => setCurrentValue("");
+
+  const undo = () => setCurrentValue((p) => p.slice(0, -1));
 
   const onAction = (input: Symbols) => {
     switch (input) {
-      case "clean":
-        return clear();
       case "finish":
         return onSubmit();
+      case "clean":
+        return clear();
       case "undo":
         return undo();
       case "save":
-        return save(preview);
+        return save(currentValue);
       case "unSave":
-        return unSave(preview);
+        setCurrentValue("");
+        return unSave(currentValue);
       default:
-        setPreview((p) => p + input);
+        setCurrentValue((p) => p + input);
     }
-  };
-
-  const copyAndClose = async () => {
-    setPreview("");
-    await Clipboard.copy(preview);
-    await closeMainWindow({ clearRootSearch: true });
   };
 
   return {
@@ -58,5 +53,8 @@ export const usePreview = (): ContextProps => {
     onSubmit,
     copyAndClose,
     onAction,
+    historic,
+    deleteAllSaves,
+    setCurrentValue,
   };
 };

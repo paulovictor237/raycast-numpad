@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ItemField, ItemProps } from "./item";
+import { ItemField, ItemProps } from "../atoms/item";
 import { Icon } from "@raycast/api";
 
 export type Props = Pick<ItemProps, "id" | "context">;

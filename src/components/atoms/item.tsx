@@ -1,14 +1,14 @@
 import { Grid, Color, ActionPanel, Action, Icon } from "@raycast/api";
 import { FC } from "react";
-import { Symbols } from "..";
-import { ContextProps } from "../hooks/preview";
+import { Symbols } from "../..";
+import { ContextProps } from "../../hooks/preview";
 
 export type ItemProps = {
   id: Symbols;
   icon: Icon;
   title: string;
   color?: Color;
-  context?: ContextProps;
+  context: ContextProps;
 };
 
 export const ItemField: FC<ItemProps> = (item) => {
@@ -34,6 +34,10 @@ export const ItemField: FC<ItemProps> = (item) => {
             title="Copy Text"
             shortcut={{ modifiers: ["cmd", "shift"], key: "enter" }}
             onAction={item.context?.copyAndClose}
+          />
+          <Action
+            title="Delete All Saves"
+            onAction={item.context?.deleteAllSaves}
           />
         </ActionPanel>
       }
